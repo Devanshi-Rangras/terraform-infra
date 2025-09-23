@@ -6,44 +6,47 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  TF_VERSION: '1.7.0'
+
 stages:
 - stage: Terraform
   jobs:
   - job: Deploy
     steps:
-    # Install Terraform
-    - task: TerraformInstaller@1
-      inputs:
-        terraformVersion: $(TF_VERSION)
+      # Install Terraform
+      - task: TerraformInstaller@1
+        inputs:
+          terraformVersion: $(TF_VERSION)
     
-    # Terraform Init
-    - task: TerraformTaskV4@1
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        backendServiceArm: 'MyServiceConnection'
-        backendAzureRmResourceGroupName: 'rg-tfstate'
-        backendAzureRmStorageAccountName: 'sttfstate1234'
-        backendAzureRmContainerName: 'tfstate'
-        backendAzureRmKey: 'terraform.tfstate'
+      # Terraform Init
+      - task: TerrformTaskV4@1
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          backendServiceArm: 'ARMserviceconn'
+          backendAzureRmResourceGroupName: 'rg-new-devanshi'
+          backendAzureRmStorageAccountName: 'remotetfstate1234'
+          backendAzureRmContainerName: 'mytfstatecontainer'
+          backendAzureRmKey: 'terraform.tfstate'
     
-    # Validate
-    - task: TerraformTaskV4@1
-      inputs:
-        provider: 'azurerm'
-        command: 'validate'
+      # Validate
+      - task: TerraformTaskV4@1
+        inputs:
+          provider: 'azurerm'
+          command: 'validate'
     
-    # Plan
-    - task: TerraformTaskV4@1
-      inputs:
-        provider: 'azurerm'
-        command: 'plan'
-        environmentServiceNameAzureRM: 'MyServiceConnection'
+      # Plan
+      - task: TerraformTaskV4@1
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          environmentServiceNameAzureRM: 'ARMserviceconn'
     
-     # Apply
-    - task: TerraformTaskV4@1
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        environmentServiceNameAzureRM: ''
-        commandOptions: '-auto-approve'
+      # Apply
+      - task: TerraformTaskV4@1
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          environmentServiceNameAzureRM: 'ARMserviceconn'
+          commandOptions: '-auto-approve'
