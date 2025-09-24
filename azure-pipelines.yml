@@ -26,11 +26,7 @@ stages:
           provider: 'azurerm'
           command: 'init'
           backendServiceArm: 'ARMserviceconn'
-          backendAzureRmResourceGroupName: 'rg-new-devanshi'
-          backendAzureRmStorageAccountName: 'remotetfstate1234'
-          backendAzureRmContainerName: 'mytfstatecontainer'
-          backendAzureRmKey: 'terraform.tfstate'
-    
+
       # Validate
       - task: TerraformTaskV1@0
         inputs:
