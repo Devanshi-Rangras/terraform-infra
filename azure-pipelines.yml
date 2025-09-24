@@ -20,7 +20,7 @@ stages:
           terraformVersion: $(TF_VERSION)
     
       # Terraform Init
-      - task: TerrformTaskV4@1
+      - task: TerraformTaskV1@0
         inputs:
           provider: 'azurerm'
           command: 'init'
@@ -31,20 +31,20 @@ stages:
           backendAzureRmKey: 'terraform.tfstate'
     
       # Validate
-      - task: TerraformTaskV4@1
+      - task: TerraformTaskV1@0
         inputs:
           provider: 'azurerm'
           command: 'validate'
     
       # Plan
-      - task: TerraformTaskV4@1
+      - task: TerraformTaskV1@0
         inputs:
           provider: 'azurerm'
           command: 'plan'
           environmentServiceNameAzureRM: 'ARMserviceconn'
     
       # Apply
-      - task: TerraformTaskV4@1
+      - task: TerraformTaskV1@0
         inputs:
           provider: 'azurerm'
           command: 'apply'
