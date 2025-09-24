@@ -25,7 +25,7 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'init'
-          backendServiceArm: 'ARMserviceconn'
+          environmentServiceNameAzureRM: 'ARMserviceconn'
 
       # Validate
       - task: TerraformTaskV1@0
